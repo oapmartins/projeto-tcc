@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:projeto_tcc/pages/register/register_controller.dart';
 import 'package:projeto_tcc/pages/wave_custom_paint.dart';
 
