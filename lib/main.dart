@@ -15,7 +15,16 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        appBarTheme: AppBarTheme(
+          centerTitle: true,
+          color: Colors.green.shade700,
+          iconTheme: const IconThemeData(color: Colors.white),
+          titleTextStyle: const TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
+            color: Colors.white,
+          ),
+        ),
         useMaterial3: true,
       ),
       initialRoute: '/login',
