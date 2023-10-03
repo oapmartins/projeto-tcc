@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:projeto_tcc/pages/login/login_page.dart';
-import 'package:projeto_tcc/pages/register/register_page.dart';
+import 'package:projeto_tcc/util/routes.dart';
 
 void main() {
   runApp(const MyApp());
@@ -28,10 +27,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       initialRoute: '/login',
-      getPages: [
-        GetPage(name: '/login', page: () => const LoginPage()),
-        GetPage(name: '/register', page: () => const RegisterPage()),
-      ],
+      getPages: routesApp,
     );
   }
 }

@@ -112,7 +112,9 @@ class LoginPage extends StatelessWidget {
                               height: 60,
                               width: Get.size.width,
                               child: ElevatedButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  Get.toNamed('/goals');
+                                },
                                 style: ButtonStyle(
                                   shape: MaterialStatePropertyAll(
                                     RoundedRectangleBorder(
