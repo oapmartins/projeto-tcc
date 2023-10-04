@@ -22,7 +22,7 @@ class AllergyPage extends StatelessWidget {
           // color: Colors.green,
           child: ElevatedButton(
             onPressed: () {
-              Get.toNamed('/goals');
+              Get.toNamed('/home');
             },
             style: ButtonStyle(
               shape: MaterialStatePropertyAll(
