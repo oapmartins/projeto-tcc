@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_tcc/home/diet/diet_page.dart';
+import 'package:projeto_tcc/home/history/history_page.dart';
 import 'package:projeto_tcc/home/profile/profile_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -20,6 +21,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
 
   static const List<Widget> _listPages = <Widget>[
     DietPage(),
+    HistoryPage(),
     ProfilePage(),
   ];
 
@@ -33,6 +35,12 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
           items: const [
             BottomNavigationBarItem(
               label: 'Dieta',
+              icon: Icon(
+                Icons.text_snippet_outlined,
+              ),
+            ),
+            BottomNavigationBarItem(
+              label: 'Histórico Dieta',
               icon: Icon(
                 Icons.text_snippet_outlined,
               ),

@@ -113,7 +113,7 @@ class LoginPage extends StatelessWidget {
                               width: Get.size.width,
                               child: ElevatedButton(
                                 onPressed: () {
-                                  Get.toNamed('/goals');
+                                  Get.toNamed('/allergy');
                                 },
                                 style: ButtonStyle(
                                   shape: MaterialStatePropertyAll(

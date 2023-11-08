@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:projeto_tcc/pages/goals/goals_controller.dart';
+import 'package:projeto_tcc/pages/allergy/allergy_controller.dart';
 
 import '../../util/widgets/card_switch_widget.dart';
 
@@ -43,8 +43,8 @@ class AllergyPage extends StatelessWidget {
             ),
           ),
         ),
-        body: GetBuilder<GoalsController>(
-          init: GoalsController(),
+        body: GetBuilder<AllergyController>(
+          init: AllergyController(),
           builder: (controller) {
             return ListView(
               padding: const EdgeInsets.all(16),

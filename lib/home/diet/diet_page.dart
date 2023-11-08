@@ -1,8 +1,9 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:projeto_tcc/pages/goals/goals_controller.dart';
-// ignore_for_file: prefer_const_constructors
+import 'package:projeto_tcc/home/diet/diet_controller.dart';
 
 class DietPage extends StatefulWidget {
   const DietPage({super.key});
@@ -17,10 +18,33 @@ class _DietPageState extends State<DietPage> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           title: const Text('Selecione a sua dieta'),
         ),
-        body: GetBuilder<GoalsController>(
-          init: GoalsController(),
+        floatingActionButton: SizedBox(
+          width: 110,
+          // height: 100,
+          child: FloatingActionButton(
+            backgroundColor: Colors.blue,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                Icon(FontAwesomeIcons.cloud, color: Colors.white),
+                SizedBox(width: 10),
+                Text(
+                  'Salvar',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                  ),
+                ),
+              ],
+            ),
+            onPressed: () {},
+          ),
+        ),
+        body: GetBuilder<DietController>(
+          init: DietController(),
           builder: (controller) {
             return ListView(
               padding: const EdgeInsets.all(16),
@@ -38,7 +62,7 @@ class _DietPageState extends State<DietPage> {
   }
 }
 
-class DietComponentWidget extends StatelessWidget {
+class DietComponentWidget extends StatefulWidget {
   const DietComponentWidget({
     super.key,
     required this.title,
@@ -47,11 +71,37 @@ class DietComponentWidget extends StatelessWidget {
   final String title;
 
   @override
+  State<DietComponentWidget> createState() => _DietComponentWidgetState();
+}
+
+class _DietComponentWidgetState extends State<DietComponentWidget> {
+  late TimeOfDay _selectedTime;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedTime = TimeOfDay.now();
+  }
+
+  Future<void> _selectTime(BuildContext context) async {
+    final TimeOfDay? picked = await showTimePicker(
+      context: context,
+      initialTime: _selectedTime,
+    );
+
+    if (picked != null && picked != _selectedTime) {
+      setState(() {
+        _selectedTime = picked;
+      });
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         ExpansionTile(
-          tilePadding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+          tilePadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
           backgroundColor: Colors.green.shade50,
           collapsedShape: const ContinuousRectangleBorder(
             side: BorderSide(
@@ -77,17 +127,46 @@ class DietComponentWidget extends StatelessWidget {
           iconColor: Colors.green,
           title: Row(
             children: [
-              Icon(FontAwesomeIcons.breadSlice),
-              SizedBox(width: 15),
+              GestureDetector(
+                onTap: () {
+                  _selectTime(context);
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    border: Border.all(
+                      color: Colors.green,
+                    ),
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(10),
+                    ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(5),
+                    child: Row(
+                      children: [
+                        const Icon(FontAwesomeIcons.clock, size: 20),
+                        const SizedBox(width: 10),
+                        Center(
+                            child: Text(
+                          _selectedTime.format(context),
+                          style: const TextStyle(fontWeight: FontWeight.w600, color: Colors.black),
+                        )),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 10),
               Text(
-                title,
-                style: TextStyle(
+                widget.title,
+                style: const TextStyle(
                   fontWeight: FontWeight.w500,
                 ),
               ),
             ],
           ),
-          children: const [
+          children: [
             ListTile(
               shape: ContinuousRectangleBorder(
                 borderRadius: BorderRadius.only(
@@ -97,89 +176,166 @@ class DietComponentWidget extends StatelessWidget {
               ),
               title: Column(
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        children: [
-                          Text('2 unidades'),
-                        ],
-                      ),
-                      Column(
-                        children: [
-                          Text('Ovos'),
-                        ],
-                      ),
-                      Column(
-                        children: [
-                          Text('100 Kcal'),
-                        ],
-                      ),
-                    ],
+                  SizedBox(
+                    height: 50,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              children: const [
+                                Text('2 unidades'),
+                              ],
+                            ),
+                            Column(
+                              children: const [
+                                Text('Ovos'),
+                              ],
+                            ),
+                            Column(
+                              children: const [
+                                Text('100 Kcal'),
+                              ],
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(10),
+                                ),
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Icon(
+                                  FontAwesomeIcons.rightLeft,
+                                  color: Colors.blue,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  const Divider(),
+                  SizedBox(
+                    height: 50,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              children: const [
+                                Text('2 fatias'),
+                              ],
+                            ),
+                            Column(
+                              children: const [
+                                Text('Pão'),
+                              ],
+                            ),
+                            Column(
+                              children: const [
+                                Text('30 Kcal'),
+                              ],
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(10),
+                                ),
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Icon(
+                                  FontAwesomeIcons.rightLeft,
+                                  color: Colors.blue,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                   Divider(),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        children: [
-                          Text('2 fatias'),
-                        ],
-                      ),
-                      Column(
-                        children: [
-                          Text('Pão'),
-                        ],
-                      ),
-                      Column(
-                        children: [
-                          Text('30 Kcal'),
-                        ],
-                      ),
-                    ],
-                  ),
-                  Divider(),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        children: [
-                          Text('1 copo'),
-                        ],
-                      ),
-                      Column(
-                        children: [
-                          Text('Café puro'),
-                        ],
-                      ),
-                      Column(
-                        children: [
-                          Text('10 Kcal'),
-                        ],
-                      ),
-                    ],
+                  SizedBox(
+                    height: 50,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              children: const [
+                                Text('1 copo'),
+                              ],
+                            ),
+                            Column(
+                              children: const [
+                                Text('Café puro'),
+                              ],
+                            ),
+                            Column(
+                              children: const [
+                                Text('10 Kcal'),
+                              ],
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(10),
+                                ),
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Icon(
+                                  FontAwesomeIcons.rightLeft,
+                                  color: Colors.blue,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                   Divider(color: Colors.black),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        children: [
-                          Text(
-                            'Total',
-                            style: TextStyle(fontWeight: FontWeight.w800),
-                          ),
-                        ],
-                      ),
-                      Column(
-                        children: [
-                          Text(
-                            '140 Kcal',
-                            style: TextStyle(fontWeight: FontWeight.w800),
-                          ),
-                        ],
-                      ),
-                    ],
+                  SizedBox(
+                    height: 50,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              children: [
+                                Text(
+                                  'Total',
+                                  style: TextStyle(fontWeight: FontWeight.w800),
+                                ),
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                Text(
+                                  '140 Kcal',
+                                  style: TextStyle(fontWeight: FontWeight.w800),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
@@ -195,7 +351,7 @@ class DietComponentWidget extends StatelessWidget {
             height: 40,
             decoration: BoxDecoration(
               color: Colors.green.shade200,
-              borderRadius: BorderRadius.only(
+              borderRadius: const BorderRadius.only(
                 bottomLeft: Radius.circular(10),
                 bottomRight: Radius.circular(10),
               ),
@@ -203,12 +359,12 @@ class DietComponentWidget extends StatelessWidget {
                 color: Colors.green,
               ),
             ),
-            child: Center(
+            child: const Center(
               child: Text('Adicionar Alimentos'),
             ),
           ),
         ),
-        SizedBox(height: 15),
+        const SizedBox(height: 15),
       ],
     );
   }
