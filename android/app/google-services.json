@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "204893934214",
+    "project_id": "diet-max-tcc",
+    "storage_bucket": "diet-max-tcc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:204893934214:android:a5061a171eade356247707",
+        "android_client_info": {
+          "package_name": "diet.max.tcc"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxzNLSUT79g2QCdbxscH4jlW_LYwVrKo0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

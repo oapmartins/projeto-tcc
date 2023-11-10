@@ -1,4 +1,4 @@
-package com.example.projeto_tcc
+package diet.max.tcc
 
 import io.flutter.embedding.android.FlutterActivity
 

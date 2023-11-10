@@ -19,7 +19,7 @@ class _DietPageState extends State<DietPage> {
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          title: const Text('Selecione a sua dieta'),
+          title: const Text('Dieta'),
         ),
         floatingActionButton: SizedBox(
           width: 110,
@@ -29,7 +29,7 @@ class _DietPageState extends State<DietPage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: const [
-                Icon(FontAwesomeIcons.cloud, color: Colors.white),
+                Icon(FontAwesomeIcons.floppyDisk, color: Colors.white),
                 SizedBox(width: 10),
                 Text(
                   'Salvar',
@@ -49,10 +49,36 @@ class _DietPageState extends State<DietPage> {
             return ListView(
               padding: const EdgeInsets.all(16),
               children: const [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          'Valor estimado de sua dieta',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        Text(
+                          'R\$ 653,00',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w800,
+                            color: Colors.blue,
+                            fontSize: 24,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                SizedBox(height: 15),
                 DietComponentWidget(title: 'Café da manhã'),
                 DietComponentWidget(title: 'Almoço'),
                 DietComponentWidget(title: 'Café da tarde'),
                 DietComponentWidget(title: 'Jantar'),
+                SizedBox(height: 50),
               ],
             );
           },

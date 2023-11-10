@@ -6,10 +6,12 @@ class HistoryCardWidget extends StatelessWidget {
     super.key,
     required this.textRefeicao,
     required this.dataRefeicao,
+    required this.caloriasRefeicao,
   });
 
   final String textRefeicao;
   final String dataRefeicao;
+  final String caloriasRefeicao;
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +38,7 @@ class HistoryCardWidget extends StatelessWidget {
             const SizedBox(width: 10),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   textRefeicao,
@@ -45,20 +48,20 @@ class HistoryCardWidget extends StatelessWidget {
                     fontSize: 20,
                   ),
                 ),
-                const Text(
-                  'Salvo em:',
-                  style: TextStyle(
-                    color: Colors.green,
-                    fontWeight: FontWeight.w800,
-                    fontSize: 15,
-                  ),
-                ),
                 Text(
                   dataRefeicao,
                   style: const TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.w600,
                     fontSize: 20,
+                  ),
+                ),
+                Text(
+                  caloriasRefeicao,
+                  style: TextStyle(
+                    color: Colors.green.shade200,
+                    fontWeight: FontWeight.w800,
+                    fontSize: 15,
                   ),
                 ),
               ],
