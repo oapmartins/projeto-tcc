@@ -14,6 +14,7 @@ class AllergyPage extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Você tem alguma alergia? 😢'),
+          automaticallyImplyLeading: false,
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: SizedBox(

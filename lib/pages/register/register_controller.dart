@@ -15,8 +15,9 @@ class RegisterController extends GetxController {
         email: email.text,
         password: password.text,
       )
-          .then((value) {
-        value.user?.updateDisplayName(name.text);
+          .then((value) async {
+        await value.user?.updateDisplayName(name.text);
+        Get.offAndToNamed('/allergy');
         SnackbarsWidget().successSnackbar(
           title: 'Sucesso!',
           text: 'O usuário foi registrado com sucesso!',

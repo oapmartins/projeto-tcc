@@ -15,7 +15,7 @@ class LoginController extends GetxController {
           .then((value) {
         // salvar dados do usuário localmente.
         // https://pub.dev/packages/sembast
-        Get.offAndToNamed('/allergy');
+        Get.offAndToNamed('/home');
       });
     } on FirebaseAuthException catch (e) {
       if (e.code == 'invalid-email') {
