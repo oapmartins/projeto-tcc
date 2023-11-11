@@ -13,6 +13,7 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
   final _formKey = GlobalKey<FormState>();
+  bool obscureTextPassword = true;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +40,6 @@ class _RegisterPageState extends State<RegisterPage> {
                       child: SingleChildScrollView(
                         child: Form(
                           key: _formKey,
-                          autovalidateMode: AutovalidateMode.always,
                           child: Column(
                             children: [
                               TextFormField(
@@ -112,13 +112,20 @@ class _RegisterPageState extends State<RegisterPage> {
                                   color: Colors.grey.shade700,
                                   fontSize: 18,
                                 ),
+                                obscureText: obscureTextPassword,
                                 decoration: InputDecoration(
                                   contentPadding: const EdgeInsets.symmetric(vertical: 18, horizontal: 15),
                                   hintText: 'Senha',
                                   hintStyle: TextStyle(color: Colors.grey.shade700, fontSize: 18),
                                   filled: true,
                                   fillColor: Colors.white,
-                                  suffixIcon: const Icon(Icons.remove_red_eye, size: 20),
+                                  suffixIcon: GestureDetector(
+                                    onTap: () {
+                                      obscureTextPassword = !obscureTextPassword;
+                                      setState(() {});
+                                    },
+                                    child: const Icon(Icons.remove_red_eye, size: 20),
+                                  ),
                                   border: const OutlineInputBorder(
                                     borderRadius: BorderRadius.all(
                                       Radius.circular(15),
@@ -146,13 +153,20 @@ class _RegisterPageState extends State<RegisterPage> {
                                   color: Colors.grey.shade700,
                                   fontSize: 18,
                                 ),
+                                obscureText: obscureTextPassword,
                                 decoration: InputDecoration(
                                   contentPadding: const EdgeInsets.symmetric(vertical: 18, horizontal: 15),
                                   hintText: 'Confirmar Senha',
                                   hintStyle: TextStyle(color: Colors.grey.shade700, fontSize: 18),
                                   filled: true,
                                   fillColor: Colors.white,
-                                  suffixIcon: const Icon(Icons.remove_red_eye, size: 20),
+                                  suffixIcon: GestureDetector(
+                                    onTap: () {
+                                      obscureTextPassword = !obscureTextPassword;
+                                      setState(() {});
+                                    },
+                                    child: const Icon(Icons.remove_red_eye, size: 20),
+                                  ),
                                   errorStyle: const TextStyle(fontSize: 15),
                                   border: const OutlineInputBorder(
                                     borderRadius: BorderRadius.all(
@@ -168,7 +182,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                   ),
                                 ),
                                 validator: (value) {
-                                  if (value != controller.password.text) {
+                                  if (controller.password.text != '' && value != controller.password.text) {
                                     return 'As senhas não correspondem!';
                                   }
                                   return null;

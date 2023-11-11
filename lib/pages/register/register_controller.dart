@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:projeto_tcc/util/widgets/snackbars_widget.dart';
 
 class RegisterController extends GetxController {
   TextEditingController name = TextEditingController();
@@ -9,19 +10,39 @@ class RegisterController extends GetxController {
 
   Future<void> registerAccount() async {
     try {
-      final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
         email: email.text,
         password: password.text,
-      );
-      print(credential);
+      )
+          .then((value) {
+        value.user?.updateDisplayName(name.text);
+        SnackbarsWidget().successSnackbar(
+          title: 'Sucesso!',
+          text: 'O usuário foi registrado com sucesso!',
+          context: Get.context!,
+        );
+      });
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
+        SnackbarsWidget().alertSnackbar(
+          title: 'Alerta!',
+          text: 'A senha está muito fraca!',
+          context: Get.context!,
+        );
       } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
+        SnackbarsWidget().alertSnackbar(
+          title: 'Alerta!',
+          text: 'Email já registrado!',
+          context: Get.context!,
+        );
       }
     } catch (e) {
-      print(e);
+      SnackbarsWidget().errorSnackbar(
+        title: 'Erro!',
+        text: 'Erro ao criar conta $e',
+        context: Get.context!,
+      );
     }
   }
 }
