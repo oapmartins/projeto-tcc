@@ -14,6 +14,7 @@ class LoginController extends GetxController {
           .signInWithEmailAndPassword(email: emailController.text, password: passwordController.text)
           .then((value) {
         // salvar dados do usuário localmente.
+        // https://pub.dev/packages/sembast
         Get.offAndToNamed('/allergy');
       });
     } on FirebaseAuthException catch (e) {
