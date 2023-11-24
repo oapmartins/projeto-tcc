@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_tcc/home/diet/diet_page.dart';
-import 'package:projeto_tcc/home/history/history_page.dart';
-import 'package:projeto_tcc/home/profile/profile_page.dart';
+import 'package:projeto_tcc/pages/home/diet/diet_page.dart';
+import 'package:projeto_tcc/pages/home/history/history_page.dart';
+import 'package:projeto_tcc/pages/home/profile/profile_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -40,7 +40,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
               ),
             ),
             BottomNavigationBarItem(
-              label: 'Histórico Dieta',
+              label: 'Histórico',
               icon: Icon(
                 Icons.text_snippet_outlined,
               ),

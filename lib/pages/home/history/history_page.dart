@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:projeto_tcc/home/history/widgets/history_card_widget.dart';
+import 'package:projeto_tcc/pages/home/history/widgets/history_card_widget.dart';
 
 class HistoryPage extends StatelessWidget {
   const HistoryPage({super.key});
@@ -11,7 +11,7 @@ class HistoryPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: const Text('Histórico da dieta'),
+        title: const Text('Histórico'),
       ),
       body: SingleChildScrollView(
         child: Column(

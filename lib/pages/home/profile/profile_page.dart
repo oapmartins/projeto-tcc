@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:projeto_tcc/home/profile/profile_controller.dart';
+import 'package:projeto_tcc/pages/home/profile/profile_controller.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -31,7 +31,10 @@ class _ProfilePageState extends State<ProfilePage> {
         builder: (ProfileController controller) {
           controller.nameController.text = user?.displayName ?? '';
           controller.emailController.text = user?.email ?? '';
-          controller.pathPhotoUser = user?.photoURL ?? '';
+
+          if (controller.pathPhotoUser.isEmpty) {
+            controller.pathPhotoUser = user?.photoURL ?? '';
+          }
 
           return Scaffold(
             appBar: AppBar(
@@ -47,15 +50,19 @@ class _ProfilePageState extends State<ProfilePage> {
                     Stack(
                       children: [
                         CircleAvatar(
-                          radius: 50.0,
-                          backgroundImage: _imagePath?.path != null && _imagePath?.path != ''
-                              ? FileImage(File((_imagePath?.path ?? '')))
-                              : FileImage(File(user?.photoURL ?? '')) as ImageProvider,
-                          child: IconButton(
-                            icon: const Icon(Icons.edit),
-                            onPressed: () {
-                              _pickImage(controller: controller);
-                            },
+                          backgroundColor: Colors.grey,
+                          radius: 52,
+                          child: CircleAvatar(
+                            radius: 50,
+                            backgroundImage: _imagePath?.path != null && _imagePath?.path != ''
+                                ? FileImage(File((_imagePath?.path ?? '')))
+                                : NetworkImage(user?.photoURL ?? '') as ImageProvider,
+                            child: IconButton(
+                              icon: const Icon(Icons.edit, size: 30, color: Colors.white),
+                              onPressed: () {
+                                _pickImage(controller: controller);
+                              },
+                            ),
                           ),
                         ),
                       ],
@@ -68,7 +75,12 @@ class _ProfilePageState extends State<ProfilePage> {
                     const SizedBox(height: 10.0),
                     TextFormField(
                       controller: controller.emailController,
-                      decoration: const InputDecoration(labelText: 'Email'),
+                      enableInteractiveSelection: false,
+                      enabled: false,
+                      decoration: const InputDecoration(
+                        labelText: 'Email',
+                      ),
+                      readOnly: true,
                     ),
                     const SizedBox(height: 10.0),
                     TextFormField(
@@ -82,15 +94,18 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                     const SizedBox(height: 40.0),
                     SizedBox(
-                      width: Get.size.width,
+                      height: 50,
                       child: ElevatedButton(
                         onPressed: () {
                           controller.updateProfile(user: user!);
                         },
-                        style: const ButtonStyle(
-                          backgroundColor: MaterialStatePropertyAll(
-                            Colors.blue,
+                        style: ButtonStyle(
+                          shape: MaterialStatePropertyAll(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
                           ),
+                          backgroundColor: const MaterialStatePropertyAll(Colors.blue),
                         ),
                         child: const Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -105,16 +120,20 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                       ),
                     ),
+                    const SizedBox(height: 10),
                     SizedBox(
-                      width: Get.size.width,
+                      height: 50,
                       child: ElevatedButton(
                         onPressed: () {
                           controller.logout();
                         },
-                        style: const ButtonStyle(
-                          backgroundColor: MaterialStatePropertyAll(
-                            Colors.red,
+                        style: ButtonStyle(
+                          shape: MaterialStatePropertyAll(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
                           ),
+                          backgroundColor: const MaterialStatePropertyAll(Colors.red),
                         ),
                         child: const Row(
                           mainAxisAlignment: MainAxisAlignment.center,

@@ -21,7 +21,9 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     FirebaseAuth.instance.authStateChanges().listen((User? user) {
-      print('Usuário logado ${user != null}');
+      if (user != null) {
+        Get.offAndToNamed('/home');
+      }
     });
     super.initState();
   }

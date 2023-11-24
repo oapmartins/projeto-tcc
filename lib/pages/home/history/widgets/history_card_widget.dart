@@ -77,7 +77,7 @@ class HistoryCardWidget extends StatelessWidget {
                     style: ButtonStyle(
                       shape: MaterialStatePropertyAll(
                         RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15),
+                          borderRadius: BorderRadius.circular(10),
                         ),
                       ),
                       backgroundColor: const MaterialStatePropertyAll(Colors.blue),
@@ -94,7 +94,7 @@ class HistoryCardWidget extends StatelessWidget {
                     style: ButtonStyle(
                       shape: MaterialStatePropertyAll(
                         RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15),
+                          borderRadius: BorderRadius.circular(10),
                         ),
                       ),
                       backgroundColor: const MaterialStatePropertyAll(Colors.green),

@@ -35,6 +35,7 @@ dependencies:
   font_awesome_flutter: ^10.5.0
   firebase_auth: ^4.12.1
   firebase_core: ^2.21.0
+  firebase_storage: ^11.5.2
   cupertino_icons: ^1.0.2
   another_flushbar: ^1.12.30
   image_picker: ^1.0.4

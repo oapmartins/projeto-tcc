@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:projeto_tcc/home/diet/diet_controller.dart';
+import 'package:projeto_tcc/pages/home/diet/diet_controller.dart';
 
 class DietPage extends StatefulWidget {
   const DietPage({super.key});
@@ -21,27 +21,17 @@ class _DietPageState extends State<DietPage> {
           automaticallyImplyLeading: false,
           title: const Text('Dieta'),
         ),
-        floatingActionButton: SizedBox(
-          width: 110,
-          // height: 100,
-          child: FloatingActionButton(
-            backgroundColor: Colors.blue,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                Icon(FontAwesomeIcons.floppyDisk, color: Colors.white),
-                SizedBox(width: 10),
-                Text(
-                  'Salvar',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                  ),
-                ),
-              ],
-            ),
-            onPressed: () {},
-          ),
+        // floatingActionButton: FloatingActionButton.extended(
+        //   label: Text('Salvar', style: TextStyle(color: Colors.white, fontSize: 20)),
+        //   onPressed: () {},
+        //   icon: Icon(FontAwesomeIcons.floppyDisk, color: Colors.white),
+        //   backgroundColor: Colors.blue,
+        // ),
+        floatingActionButton: FloatingActionButton.extended(
+          label: Text('Simular valores', style: TextStyle(color: Colors.white, fontSize: 20)),
+          onPressed: () {},
+          icon: Icon(FontAwesomeIcons.moneyBill, color: Colors.white),
+          backgroundColor: Colors.green.shade800,
         ),
         body: GetBuilder<DietController>(
           init: DietController(),
@@ -49,30 +39,6 @@ class _DietPageState extends State<DietPage> {
             return ListView(
               padding: const EdgeInsets.all(16),
               children: const [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Text(
-                          'Valor estimado de sua dieta',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        Text(
-                          'R\$ 653,00',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w800,
-                            color: Colors.blue,
-                            fontSize: 24,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
                 SizedBox(height: 15),
                 DietComponentWidget(title: 'Café da manhã'),
                 DietComponentWidget(title: 'Almoço'),
