@@ -10,4 +10,7 @@ abstract class FoodsService {
 
   @GET('${ConfigURL.API}/get_all_foods')
   Future getAllFoods();
+
+  @GET('${ConfigURL.API}/get_product_by_id')
+  Future getProductById(@Query('id') String id);
 }

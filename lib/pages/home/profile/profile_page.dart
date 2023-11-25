@@ -125,7 +125,36 @@ class _ProfilePageState extends State<ProfilePage> {
                       height: 50,
                       child: ElevatedButton(
                         onPressed: () {
-                          controller.logout();
+                          showDialog<void>(
+                            context: context,
+                            barrierDismissible: false, // user must tap button!
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: const Text('Sair'),
+                                content: const SingleChildScrollView(
+                                  child: ListBody(
+                                    children: <Widget>[
+                                      Text('Deseja sair do aplicativo?'),
+                                    ],
+                                  ),
+                                ),
+                                actions: <Widget>[
+                                  TextButton(
+                                    child: const Text('Cancelar'),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                  TextButton(
+                                    child: const Text('Sair'),
+                                    onPressed: () {
+                                      controller.logout();
+                                    },
+                                  ),
+                                ],
+                              );
+                            },
+                          );
                         },
                         style: ButtonStyle(
                           shape: MaterialStatePropertyAll(

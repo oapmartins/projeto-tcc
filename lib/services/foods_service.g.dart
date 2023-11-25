@@ -31,7 +31,33 @@ class _FoodsService implements FoodsService {
     )
         .compose(
           _dio.options,
-          'https://ecaa-2804-14c-5b84-8df8-34dd-fbec-9df9-10ba.ngrok-free.app/api/get_all_foods',
+          'https://web-production-27cf.up.railway.app/api/get_all_foods',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        ))));
+    final value = _result.data;
+    return value;
+  }
+
+  @override
+  Future<dynamic> getProductById(String id) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'id': id};
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch(_setStreamType<dynamic>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          'https://web-production-27cf.up.railway.app/api/get_product_by_id',
           queryParameters: queryParameters,
           data: _data,
         )
