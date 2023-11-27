@@ -1,4 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:projeto_tcc/pages/home/diet/diet_controller.dart';
 import 'package:projeto_tcc/pages/home/diet/diet_page.dart';
 import 'package:projeto_tcc/pages/home/history/history_page.dart';
 import 'package:projeto_tcc/pages/home/profile/profile_page.dart';
@@ -11,6 +14,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
+  @override
+  void initState() {
+    Get.find<DietController>().getUserDiet(id: FirebaseAuth.instance.currentUser?.uid ?? '');
+    super.initState();
+  }
+
   int _selectedIndex = 0;
 
   void _onItemTapped(int index) {

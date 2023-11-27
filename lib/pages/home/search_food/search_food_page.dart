@@ -14,6 +14,12 @@ class SearchFoodPage extends StatefulWidget {
 
 class _SearchFoodPageState extends State<SearchFoodPage> {
   @override
+  void initState() {
+    Get.find<SearchFoodController>().idRefSelected = Get.arguments['ref_id'];
+    super.initState();
+  }
+
+  @override
   void dispose() {
     Get.find<SearchFoodController>().clearList();
     super.dispose();
@@ -166,8 +172,11 @@ class _SearchFoodPageState extends State<SearchFoodPage> {
                             ],
                           ),
                           trailing: IconButton(
-                            onPressed: () {
-                              controller.getProductById(id: controller.listAllFoods[index]['id']);
+                            onPressed: () async {
+                              await controller.getProductById(
+                                id: controller.listAllFoods[index]['id'].toString(),
+                              );
+                              Get.toNamed('add-food');
                             },
                             icon: const Icon(
                               FontAwesomeIcons.plus,

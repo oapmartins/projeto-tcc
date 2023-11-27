@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:projeto_tcc/init_services.dart';
@@ -20,16 +19,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  @override
-  void initState() {
-    FirebaseAuth.instance.authStateChanges().listen((User? user) {
-      if (user != null) {
-        Get.offAndToNamed('/home');
-      }
-    });
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(

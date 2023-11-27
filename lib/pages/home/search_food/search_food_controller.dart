@@ -13,14 +13,16 @@ class SearchFoodController extends GetxController {
 
   FoodsService foodService = Get.find<FoodsService>();
   TextEditingController searchBarController = TextEditingController();
+  TextEditingController qtdePorcaoController = TextEditingController();
   UtilServiceStatus loadingAllFoods = UtilServiceStatus.done;
   UtilServiceStatus loadingProductById = UtilServiceStatus.done;
   List listAllFoods = [];
   List listAllFoodsBkp = [];
   List listFilterSelected = [];
+  Map selectedProduct = {};
+  String idRefSelected = '';
 
-  Future<List> searchAllFoods() async {
-    var listFoods = [];
+  Future<void> searchAllFoods() async {
     if (listAllFoods.isEmpty) {
       loadingAllFoods = UtilServiceStatus.loading;
       await foodService.getAllFoods().then((value) {
@@ -32,16 +34,17 @@ class SearchFoodController extends GetxController {
       });
     }
     update();
-    return listFoods;
   }
 
   Future<void> getProductById({required String id}) async {
     loadingProductById = UtilServiceStatus.loading;
-    foodService.getProductById(id).then((value) {
+    await foodService.getProductById(id).then((value) {
+      selectedProduct = value;
       loadingProductById = UtilServiceStatus.done;
     }).catchError((error) {
       loadingProductById = UtilServiceStatus.error;
     });
+    update();
   }
 
   void filterList(String text) {
@@ -79,6 +82,7 @@ class SearchFoodController extends GetxController {
   }
 
   void clearList() {
+    idRefSelected = '';
     searchBarController.clear();
     listAllFoods = [...listAllFoodsBkp];
     update();
@@ -109,7 +113,7 @@ class SearchFoodController extends GetxController {
     var listaFiltrada = [];
     for (var filter in listFilters) {
       var listaAllFoodsFiltrada = listAllFoods.where((element) {
-        return element['categoria'].toString().toLowerCase().contains(filter.toLowerCase());
+        return element['grupo'].toString().toLowerCase().contains(filter.toLowerCase());
       }).toList();
 
       listaFiltrada = [...List.from(Set.from(listaFiltrada).union(Set.from(listaAllFoodsFiltrada)))];
