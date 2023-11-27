@@ -13,14 +13,23 @@ class SearchFoodController extends GetxController {
 
   FoodsService foodService = Get.find<FoodsService>();
   TextEditingController searchBarController = TextEditingController();
+
+  TextEditingController tamanhoPorcaoController = TextEditingController();
   TextEditingController qtdePorcaoController = TextEditingController();
+  TextEditingController idRefeicaoController = TextEditingController();
+  TextEditingController valorEstimadoController = TextEditingController();
+
   UtilServiceStatus loadingAllFoods = UtilServiceStatus.done;
   UtilServiceStatus loadingProductById = UtilServiceStatus.done;
   List listAllFoods = [];
   List listAllFoodsBkp = [];
   List listFilterSelected = [];
-  Map selectedProduct = {};
+
   String idRefSelected = '';
+  Map selectedProduct = {};
+  Map selectedPorcao = {};
+  List listPorcoes = [];
+  String valueDropDown = '';
 
   Future<void> searchAllFoods() async {
     if (listAllFoods.isEmpty) {
@@ -40,10 +49,22 @@ class SearchFoodController extends GetxController {
     loadingProductById = UtilServiceStatus.loading;
     await foodService.getProductById(id).then((value) {
       selectedProduct = value;
+
+      listPorcoes.clear();
+      for (var item in value['medidas'].entries) {
+        listPorcoes.add(item);
+      }
+      selectPorcao(listPorcoes.first.key);
+      valueDropDown = listPorcoes.first.key;
       loadingProductById = UtilServiceStatus.done;
     }).catchError((error) {
       loadingProductById = UtilServiceStatus.error;
     });
+    update();
+  }
+
+  void selectPorcao(String idPorcao) {
+    selectedPorcao = selectedProduct['medidas'][idPorcao];
     update();
   }
 
@@ -82,7 +103,6 @@ class SearchFoodController extends GetxController {
   }
 
   void clearList() {
-    idRefSelected = '';
     searchBarController.clear();
     listAllFoods = [...listAllFoodsBkp];
     update();
@@ -121,6 +141,20 @@ class SearchFoodController extends GetxController {
 
     listAllFoods = [...listaFiltrada];
 
+    update();
+  }
+
+  void clearVariables() {
+    tamanhoPorcaoController.clear();
+    qtdePorcaoController.clear();
+    idRefeicaoController.clear();
+    valorEstimadoController.clear();
+    selectedProduct = {};
+    selectedPorcao = {};
+    listPorcoes = [];
+  }
+
+  void calculateMacroQtdePorcoes(int qtdePorcoes) {
     update();
   }
 }
