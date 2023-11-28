@@ -1,45 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-Future<void> _showMyDialog() async {
-  return showDialog<void>(
-    context: Get.context!,
-    barrierDismissible: false, // user must tap button!
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: const Text('AlertDialog Title'),
-        content: const SingleChildScrollView(
-          child: ListBody(
-            children: <Widget>[
-              Text('This is a demo alert dialog.'),
-              Text('Would you like to approve of this message?'),
-            ],
-          ),
-        ),
-        actions: <Widget>[
-          TextButton(
-            child: const Text('Approve'),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-        ],
-      );
-    },
-  );
-}
-
 class HistoryCardWidget extends StatelessWidget {
   const HistoryCardWidget({
     super.key,
     required this.textRefeicao,
     required this.dataRefeicao,
-    required this.caloriasRefeicao,
+    required this.onTapVisualizar,
+    required this.onTapVoltarRefeicao,
   });
 
   final String textRefeicao;
   final String dataRefeicao;
-  final String caloriasRefeicao;
+  final Function() onTapVisualizar;
+  final Function() onTapVoltarRefeicao;
 
   @override
   Widget build(BuildContext context) {
@@ -84,14 +58,6 @@ class HistoryCardWidget extends StatelessWidget {
                     fontSize: 20,
                   ),
                 ),
-                Text(
-                  caloriasRefeicao,
-                  style: TextStyle(
-                    color: Colors.green.shade200,
-                    fontWeight: FontWeight.w800,
-                    fontSize: 15,
-                  ),
-                ),
               ],
             ),
             const Spacer(),
@@ -102,7 +68,7 @@ class HistoryCardWidget extends StatelessWidget {
                 SizedBox(
                   child: ElevatedButton(
                     onPressed: () {
-                      _showMyDialog();
+                      onTapVisualizar();
                     },
                     style: ButtonStyle(
                       shape: MaterialStatePropertyAll(
@@ -121,7 +87,7 @@ class HistoryCardWidget extends StatelessWidget {
                 SizedBox(
                   child: ElevatedButton(
                     onPressed: () {
-                      _showMyDialog();
+                      onTapVoltarRefeicao();
                     },
                     style: ButtonStyle(
                       shape: MaterialStatePropertyAll(

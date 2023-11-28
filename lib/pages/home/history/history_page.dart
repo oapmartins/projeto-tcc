@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:projeto_tcc/pages/home/history/history_controller.dart';
 import 'package:projeto_tcc/pages/home/history/widgets/history_card_widget.dart';
+import 'package:projeto_tcc/util/util_status_server.dart';
 
 class HistoryPage extends StatelessWidget {
   const HistoryPage({super.key});
@@ -13,51 +14,32 @@ class HistoryPage extends StatelessWidget {
     return GetBuilder(
         init: HistoryController(),
         builder: (HistoryController controller) {
+          if (controller.loadingHistory == UtilServiceStatus.loading) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (controller.loadingHistory == UtilServiceStatus.error) {
+            return const Center(child: Text('Erro ao realizar consulta do histórico!'));
+          }
+
           return Scaffold(
             appBar: AppBar(
               automaticallyImplyLeading: false,
               title: const Text('Histórico'),
             ),
-            body: SingleChildScrollView(
-              child: Column(
-                children: const [
-                  HistoryCardWidget(
-                    textRefeicao: 'Café da manhã',
-                    dataRefeicao: '25/10/2023',
-                    caloriasRefeicao: '450 kcal',
-                  ),
-                  HistoryCardWidget(
-                    textRefeicao: 'Almoço',
-                    dataRefeicao: '23/10/2023',
-                    caloriasRefeicao: '156 kcal',
-                  ),
-                  HistoryCardWidget(
-                    textRefeicao: 'Jantar',
-                    dataRefeicao: '16/09/2023',
-                    caloriasRefeicao: '424 kcal',
-                  ),
-                  HistoryCardWidget(
-                    textRefeicao: 'Café da manhã',
-                    dataRefeicao: '03/08/2023',
-                    caloriasRefeicao: '250 kcal',
-                  ),
-                  HistoryCardWidget(
-                    textRefeicao: 'Café da manhã',
-                    dataRefeicao: '03/08/2023',
-                    caloriasRefeicao: '530 kcal',
-                  ),
-                  HistoryCardWidget(
-                    textRefeicao: 'Café da manhã',
-                    dataRefeicao: '03/08/2023',
-                    caloriasRefeicao: '650 kcal',
-                  ),
-                  HistoryCardWidget(
-                    textRefeicao: 'Café da manhã',
-                    dataRefeicao: '03/08/2023',
-                    caloriasRefeicao: '150 kcal',
-                  ),
-                ],
-              ),
+            body: ListView.builder(
+              itemCount: controller.listHistorico.length,
+              itemBuilder: (BuildContext context, int index) {
+                return HistoryCardWidget(
+                  textRefeicao: controller.listHistorico[index]['nome'],
+                  dataRefeicao: controller.listHistorico[index]['data_criacao'],
+                  onTapVisualizar: () {
+                    controller.showDialogAlimentos(
+                        listAlimentos: controller.listHistorico[index]['alimentos']);
+                  },
+                  onTapVoltarRefeicao: () {
+                    print(controller.listHistorico[index]['ref_id']);
+                  },
+                );
+              },
             ),
           );
         });

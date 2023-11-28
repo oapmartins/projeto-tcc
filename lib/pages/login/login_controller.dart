@@ -24,6 +24,12 @@ class LoginController extends GetxController {
           text: 'O endereço de email não está válido!',
           context: Get.context!,
         );
+      } else if (e.code == 'invalid-credential') {
+        SnackbarsWidget().alertSnackbar(
+          title: 'Alerta!',
+          text: 'Os dados de login estão inválidos!',
+          context: Get.context!,
+        );
       } else if (e.code == 'user-disabled') {
         SnackbarsWidget().alertSnackbar(
           title: 'Alerta!',

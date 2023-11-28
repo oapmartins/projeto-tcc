@@ -349,7 +349,10 @@ class _ProductInfoPageState extends State<ProductInfoPage> {
                           'id': controller.selectedProduct['id'],
                           'nome': controller.selectedProduct['nome'],
                           'porcao': controller.selectedPorcao['valor_medida'],
-                          'quantidade': controller.qtdePorcaoController.text,
+                          'quantidade': controller.qtdePorcaoController.text.isEmpty
+                              ? '1'
+                              : controller.qtdePorcaoController.text,
+                          'medidas': controller.selectedPorcao,
                         },
                       );
                       Get.back();

@@ -10,4 +10,15 @@ abstract class DietService {
 
   @GET('${ConfigURL.API}/get_user_diet')
   Future getUserDiet(@Query('user_id') String id);
+
+  @POST('${ConfigURL.API}/insert_diet')
+  Future insertDiet(
+    @Query('user_id') String id,
+    @Body() String json,
+  );
+
+  @GET('${ConfigURL.API}/get_refs_history')
+  Future getRefsHistory(
+    @Query('user_id') String id,
+  );
 }
