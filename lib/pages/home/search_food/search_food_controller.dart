@@ -91,6 +91,11 @@ class SearchFoodController extends GetxController {
     var listaFiltrada = [];
     for (var filter in listFilterSelected) {
       var listaAllFoodsFiltrada = listAllFoods.where((element) {
+        if (filter == 'pussui-preco') {
+          return element['possui_valor'] != null;
+        } else if (filter == 'nao-pussui-preco') {
+          return element['possui_valor'] == null;
+        }
         return element['categoria'].toString().toLowerCase().contains(filter.toLowerCase());
       }).toList();
 
@@ -133,6 +138,11 @@ class SearchFoodController extends GetxController {
     var listaFiltrada = [];
     for (var filter in listFilters) {
       var listaAllFoodsFiltrada = listAllFoods.where((element) {
+        if (filter == 'pussui-preco') {
+          return element['possui_valor'] != null;
+        } else if (filter == 'nao-pussui-preco') {
+          return element['possui_valor'] == null;
+        }
         return element['grupo'].toString().toLowerCase().contains(filter.toLowerCase());
       }).toList();
 

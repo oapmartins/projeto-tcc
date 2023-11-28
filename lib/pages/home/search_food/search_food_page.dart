@@ -109,6 +109,8 @@ class _SearchFoodPageState extends State<SearchFoodPage> {
                           'Hortifruti',
                           'Mercearia',
                           'Padaria',
+                          'Tem preço',
+                          'Não tem preço',
                         ],
                         buttonValuesList: const [
                           'Todos',
@@ -118,6 +120,8 @@ class _SearchFoodPageState extends State<SearchFoodPage> {
                           'hortifruti',
                           'mercearia',
                           'padaria-e-rotisseria',
+                          'pussui-preco',
+                          'nao-pussui-preco',
                         ],
                         checkBoxButtonValues: controller.clickFilterSelect,
                         // spacing: 5,
@@ -132,7 +136,7 @@ class _SearchFoodPageState extends State<SearchFoodPage> {
                         padding: 20,
                         absoluteZeroSpacing: true,
                         wrapAlignment: WrapAlignment.spaceBetween,
-                        margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 9),
+                        margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 8),
                         selectedColor: Colors.black87,
                       ),
                       const SizedBox(height: 10),
@@ -169,6 +173,42 @@ class _SearchFoodPageState extends State<SearchFoodPage> {
                                   ),
                                 ],
                               ),
+                              Visibility(
+                                visible: controller.listAllFoods[index]['possui_valor'] != null,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(top: 8.0),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(10),
+                                      border: Border.all(
+                                        color: Colors.green,
+                                      ),
+                                    ),
+                                    child: const Padding(
+                                      padding: EdgeInsets.all(4),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Icon(
+                                            FontAwesomeIcons.dollarSign,
+                                            color: Colors.green,
+                                            size: 12,
+                                          ),
+                                          Text(
+                                            'Possui preço',
+                                            style: TextStyle(
+                                              color: Colors.green,
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w700,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              )
                             ],
                           ),
                           trailing: IconButton(
