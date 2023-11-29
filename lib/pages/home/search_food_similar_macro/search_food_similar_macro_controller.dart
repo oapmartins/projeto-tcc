@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
@@ -7,10 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:projeto_tcc/services/foods_service.dart';
 import 'package:projeto_tcc/util/util_status_server.dart';
 
-class SearchFoodController extends GetxController {
-  SearchFoodController() {
-    searchAllFoods();
-  }
+class SearchFoodSimilarMacroController extends GetxController {
   NumberFormat formatador = NumberFormat.currency(locale: 'pt_BR', symbol: 'R\$');
   FoodsService foodService = Get.find<FoodsService>();
   TextEditingController searchBarController = TextEditingController();
@@ -32,17 +27,20 @@ class SearchFoodController extends GetxController {
   List listPorcoes = [];
   String valueDropDown = '';
 
-  Future<void> searchAllFoods() async {
-    if (listAllFoods.isEmpty) {
-      loadingAllFoods = UtilServiceStatus.loading;
-      await foodService.getAllFoods().then((value) {
-        listAllFoods = jsonDecode(value);
-        listAllFoodsBkp = [...listAllFoods];
-        loadingAllFoods = UtilServiceStatus.done;
-      }).catchError((error) {
-        loadingAllFoods = UtilServiceStatus.error;
-      });
-    }
+  Map alimentoAnteriorTroca = {};
+  int posicaoAlimentoAnteriorTroca = 0;
+
+  Future<void> searchFoodsSimilarMacro({required String similarMacro}) async {
+    listAllFoods.clear();
+    loadingAllFoods = UtilServiceStatus.loading;
+    await foodService.getSimilarMacro(similarMacro).then((value) {
+      listAllFoods = value;
+      listAllFoodsBkp = [...listAllFoods];
+      loadingAllFoods = UtilServiceStatus.done;
+    }).catchError((error) {
+      loadingAllFoods = UtilServiceStatus.error;
+    });
+
     update();
   }
 
@@ -163,6 +161,8 @@ class SearchFoodController extends GetxController {
     selectedProduct = {};
     selectedPorcao = {};
     listPorcoes = [];
+    alimentoAnteriorTroca = {};
+    posicaoAlimentoAnteriorTroca = 0;
   }
 
   void calculateMacroQtdePorcoes(int qtdePorcoes) {

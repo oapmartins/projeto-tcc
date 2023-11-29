@@ -5,14 +5,14 @@ import 'package:projeto_tcc/pages/home/diet/diet_controller.dart';
 import 'package:projeto_tcc/pages/home/search_food/search_food_controller.dart';
 import 'package:projeto_tcc/util/util_status_server.dart';
 
-class ProductInfoPage extends StatefulWidget {
-  const ProductInfoPage({super.key});
+class AddFoodPage extends StatefulWidget {
+  const AddFoodPage({super.key});
 
   @override
-  State<ProductInfoPage> createState() => _ProductInfoPageState();
+  State<AddFoodPage> createState() => _AddFoodPageState();
 }
 
-class _ProductInfoPageState extends State<ProductInfoPage> {
+class _AddFoodPageState extends State<AddFoodPage> {
   @override
   void dispose() {
     Get.find<SearchFoodController>().clearVariables();
@@ -155,48 +155,6 @@ class _ProductInfoPageState extends State<ProductInfoPage> {
                         ),
                         const SizedBox(width: 10),
                         Text(
-                          'Refeição',
-                          style: TextStyle(color: Colors.grey.shade900, fontSize: 16),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      width: Get.size.width * .35,
-                      child: TextFormField(
-                        enableInteractiveSelection: false,
-                        enabled: false,
-                        style: TextStyle(color: Colors.grey.shade700, fontSize: 16),
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Colors.grey.shade300,
-                          contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                          hintText: controller.idRefSelected,
-                          hintStyle: TextStyle(color: Colors.grey.shade700, fontSize: 16),
-                          disabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(
-                              color: Colors.grey.shade700,
-                              width: 1,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 8),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        const Icon(
-                          Icons.lock,
-                          color: Colors.black,
-                          size: 18,
-                        ),
-                        const SizedBox(width: 10),
-                        Text(
                           'Valor estimado',
                           style: TextStyle(color: Colors.grey.shade900, fontSize: 16),
                         ),
@@ -213,9 +171,8 @@ class _ProductInfoPageState extends State<ProductInfoPage> {
                           filled: true,
                           fillColor: Colors.grey.shade300,
                           contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                          hintText: (controller.selectedPorcao['preco_medida'] *
-                                  (int.tryParse(controller.qtdePorcaoController.text) ?? 1))
-                              .toStringAsFixed(2),
+                          hintText: controller.formatador.format((controller.selectedPorcao['preco_medida'] *
+                              (int.tryParse(controller.qtdePorcaoController.text) ?? 1))),
                           hintStyle: TextStyle(color: Colors.grey.shade700, fontSize: 16),
                           disabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
@@ -343,15 +300,30 @@ class _ProductInfoPageState extends State<ProductInfoPage> {
                   height: 50,
                   child: ElevatedButton(
                     onPressed: () {
+                      final quantidade = controller.qtdePorcaoController.text.isEmpty
+                          ? 1
+                          : int.parse(controller.qtdePorcaoController.text);
+
+                      controller.selectedPorcao['carboidratos'] =
+                          controller.selectedPorcao['carboidratos'] * quantidade;
+                      controller.selectedPorcao['gorduras totais'] =
+                          controller.selectedPorcao['gorduras totais'] * quantidade;
+                      controller.selectedPorcao['preco_medida'] =
+                          controller.selectedPorcao['preco_medida'] * quantidade;
+                      controller.selectedPorcao['proteínas'] =
+                          controller.selectedPorcao['proteínas'] * quantidade;
+                      controller.selectedPorcao['valor energético (kcal)'] =
+                          controller.selectedPorcao['valor energético (kcal)'] * quantidade;
+                      controller.selectedPorcao['valor_medida'] =
+                          controller.selectedPorcao['valor_medida'] * quantidade;
+
                       Get.find<DietController>().addFoodRefeicao(
                         id: controller.idRefSelected,
                         food: {
                           'id': controller.selectedProduct['id'],
                           'nome': controller.selectedProduct['nome'],
-                          'porcao': controller.selectedPorcao['valor_medida'],
-                          'quantidade': controller.qtdePorcaoController.text.isEmpty
-                              ? '1'
-                              : controller.qtdePorcaoController.text,
+                          'macroPredominante': controller.selectedProduct['macro_predominante'],
+                          'quantidade': quantidade.toString(),
                           'medidas': controller.selectedPorcao,
                         },
                       );

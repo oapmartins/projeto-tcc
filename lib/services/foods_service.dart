@@ -13,4 +13,9 @@ abstract class FoodsService {
 
   @GET('${ConfigURL.API}/get_product_by_id')
   Future getProductById(@Query('id') String id);
+
+  @GET('${ConfigURL.API}/get_similar_macro')
+  Future getSimilarMacro(
+    @Query('macro') String macro,
+  );
 }

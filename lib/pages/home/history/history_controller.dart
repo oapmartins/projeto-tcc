@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:projeto_tcc/pages/home/diet/diet_controller.dart';
 import 'package:projeto_tcc/services/diet_service.dart';
 import 'package:projeto_tcc/util/util_status_server.dart';
 
@@ -10,6 +11,7 @@ class HistoryController extends GetxController {
   }
 
   DietService dietService = Get.find<DietService>();
+  DietController dietController = Get.find<DietController>();
   UtilServiceStatus loadingHistory = UtilServiceStatus.done;
   List listHistorico = [];
 
@@ -81,5 +83,47 @@ class HistoryController extends GetxController {
         );
       },
     );
+  }
+
+  Future<void> showDialogVoltarRefeicao({required Map dieta}) async {
+    return showDialog<void>(
+      context: Get.context!,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Alerta'),
+          content: const SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('Você deseja voltar a refeição selecionada para a dieta?'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Não'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: const Text('Sim'),
+              onPressed: () {
+                if (dietController.userDiet.length > (dieta['position'])) {
+                  voltarRefeicaoDieta(dieta: dieta);
+                }
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void voltarRefeicaoDieta({required Map dieta}) {
+    dietController.userDiet[dieta['position']] = dieta;
+    dietController.calcularValorTotalDieta();
+    dietController.update();
   }
 }

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:projeto_tcc/services/diet_service.dart';
 import 'package:projeto_tcc/util/util_status_server.dart';
 import 'package:projeto_tcc/util/widgets/snackbars_widget.dart';
@@ -14,10 +15,18 @@ class DietController extends GetxController {
   UtilServiceStatus loadingInsertDiet = UtilServiceStatus.done;
   List userDiet = [];
 
+  NumberFormat formatador = NumberFormat.currency(locale: 'pt_BR', symbol: 'R\$');
+  double carboidratosTotaisDieta = 0.0;
+  double gordurasTotaisDieta = 0.0;
+  double proteinasTotaisDieta = 0.0;
+  double caloriasTotaisDieta = 0.0;
+  double precoTotalDieta = 0.0;
+
   Future<void> getUserDiet({required String id}) async {
     loadingDiet = UtilServiceStatus.loading;
     await dietService.getUserDiet(id).then((value) {
       userDiet = value;
+      calcularValorTotalDieta();
       loadingDiet = UtilServiceStatus.done;
     }).catchError((error) {
       loadingDiet = UtilServiceStatus.error;
@@ -80,6 +89,18 @@ class DietController extends GetxController {
         diet['alimentos'].add(food);
       }
     });
+    calcularValorTotalDieta();
+    update();
+  }
+
+  void changeFoodRefeicao({required String id, required Map food, required int position}) {
+    userDiet.toList().asMap().forEach((index, diet) {
+      if (diet['ref_id'] == id) {
+        diet['atualizado'] = true;
+        diet['alimentos'][position] = food;
+      }
+    });
+    calcularValorTotalDieta();
     update();
   }
 
@@ -100,6 +121,7 @@ class DietController extends GetxController {
       diet['nome'] = 'Refeição $index';
       diet['position'] = index;
     });
+    calcularValorTotalDieta();
     update();
   }
 
@@ -140,6 +162,7 @@ class DietController extends GetxController {
   void removeAlimento({required int positionRef, required int positionAlimento}) {
     userDiet[positionRef]['alimentos'].removeAt(positionAlimento);
     userDiet[positionRef]['atualizado'] = true;
+    calcularValorTotalDieta();
     update();
   }
 
@@ -175,5 +198,22 @@ class DietController extends GetxController {
         );
       },
     );
+  }
+
+  void calcularValorTotalDieta() {
+    carboidratosTotaisDieta = 0;
+    gordurasTotaisDieta = 0;
+    proteinasTotaisDieta = 0;
+    caloriasTotaisDieta = 0;
+    precoTotalDieta = 0;
+    userDiet.toList().asMap().forEach((index, diet) {
+      diet['alimentos'].forEach((alimento) {
+        carboidratosTotaisDieta += alimento['medidas']['carboidratos'] ?? 0;
+        gordurasTotaisDieta += alimento['medidas']['gorduras totais'] ?? 0;
+        proteinasTotaisDieta += alimento['medidas']['proteínas'] ?? 0;
+        caloriasTotaisDieta += alimento['medidas']['valor energético (kcal)'] ?? 0;
+        precoTotalDieta += alimento['medidas']['preco_medida'] ?? 0;
+      });
+    });
   }
 }

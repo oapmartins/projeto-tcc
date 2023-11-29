@@ -36,7 +36,7 @@ class HistoryPage extends StatelessWidget {
                         listAlimentos: controller.listHistorico[index]['alimentos']);
                   },
                   onTapVoltarRefeicao: () {
-                    print(controller.listHistorico[index]['ref_id']);
+                    controller.showDialogVoltarRefeicao(dieta: controller.listHistorico[index]);
                   },
                 );
               },

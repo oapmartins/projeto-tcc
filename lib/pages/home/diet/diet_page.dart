@@ -5,6 +5,7 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:projeto_tcc/pages/home/diet/diet_controller.dart';
+import 'package:projeto_tcc/pages/home/search_food_similar_macro/search_food_similar_macro_controller.dart';
 import 'package:projeto_tcc/util/util_status_server.dart';
 
 class DietPage extends StatefulWidget {
@@ -89,13 +90,6 @@ class _DietPageState extends State<DietPage> {
                     label: 'Adicionar refeição',
                     onTap: controller.addRefeicao,
                   ),
-                  SpeedDialChild(
-                    child: const Icon(FontAwesomeIcons.dollarSign),
-                    backgroundColor: Colors.deepOrange,
-                    foregroundColor: Colors.white,
-                    label: 'Simular valores',
-                    onTap: () => debugPrint('SECOND CHILD'),
-                  ),
                 ],
               ),
             ],
@@ -106,6 +100,169 @@ class _DietPageState extends State<DietPage> {
               return ListView.builder(
                 itemCount: controller.userDiet.length,
                 itemBuilder: (BuildContext context, int index) {
+                  if (controller.userDiet.length == (index + 1)) {
+                    return Column(
+                      children: [
+                        DietComponentWidget(
+                          id: controller.userDiet[index]['ref_id'],
+                          position: index,
+                          title: controller.userDiet[index]['nome'],
+                          time: controller.userDiet[index]['time'],
+                          alimentos: controller.userDiet[index]['alimentos'],
+                          controller: controller,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 20, bottom: 10),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Colors.grey.shade700,
+                                width: 1,
+                              ),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        'Macronutrientes diários dieta:',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w800,
+                                          fontSize: 16,
+                                          color: Colors.grey.shade700,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Column(
+                                        children: [
+                                          const Text(
+                                            'Carb',
+                                            style: TextStyle(
+                                              color: Colors.brown,
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w700,
+                                            ),
+                                          ),
+                                          Text(
+                                            controller.carboidratosTotaisDieta.toStringAsFixed(2),
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w700,
+                                              color: Colors.grey.shade700,
+                                              fontSize: 17,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Column(
+                                        children: [
+                                          Text(
+                                            'Gorduras',
+                                            style: TextStyle(
+                                              color: Colors.yellow.shade900,
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w700,
+                                            ),
+                                          ),
+                                          Text(
+                                            controller.gordurasTotaisDieta.toStringAsFixed(2),
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w700,
+                                              color: Colors.grey.shade700,
+                                              fontSize: 17,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Column(
+                                        children: [
+                                          const Text(
+                                            'Proteínas',
+                                            style: TextStyle(
+                                              color: Colors.red,
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w700,
+                                            ),
+                                          ),
+                                          Text(
+                                            controller.proteinasTotaisDieta.toStringAsFixed(2),
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w700,
+                                              color: Colors.grey.shade700,
+                                              fontSize: 17,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Column(
+                                        children: [
+                                          const Text(
+                                            'Calorias',
+                                            style: TextStyle(
+                                              color: Colors.blue,
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w700,
+                                            ),
+                                          ),
+                                          Text(
+                                            controller.caloriasTotaisDieta.toStringAsFixed(2),
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w700,
+                                              color: Colors.grey.shade700,
+                                              fontSize: 17,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 10, bottom: 10),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Colors.grey.shade700,
+                                width: 1,
+                              ),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        'Preço diário dieta: ${controller.formatador.format(controller.precoTotalDieta)}',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w800,
+                                          fontSize: 16,
+                                          color: Colors.grey.shade700,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    );
+                  }
                   return DietComponentWidget(
                     id: controller.userDiet[index]['ref_id'],
                     position: index,
@@ -178,11 +335,13 @@ class _DietComponentWidgetState extends State<DietComponentWidget> {
     var gordurasTotais = 0.0;
     var proteinasTotais = 0.0;
     var caloriasTotais = 0.0;
+    var precoTotal = 0.0;
     widget.controller.userDiet[widget.position]['alimentos'].forEach((alimento) {
       carboidratosTotais += alimento['medidas']['carboidratos'];
       gordurasTotais += alimento['medidas']['gorduras totais'];
       proteinasTotais += alimento['medidas']['proteínas'];
       caloriasTotais += alimento['medidas']['valor energético (kcal)'];
+      precoTotal += alimento['medidas']['preco_medida'];
     });
     return Column(
       children: [
@@ -354,7 +513,16 @@ class _DietComponentWidgetState extends State<DietComponentWidget> {
                             ),
                             SizedBox(width: 10),
                             GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+                                Get.find<SearchFoodSimilarMacroController>().alimentoAnteriorTroca =
+                                    alimentos.value;
+                                Get.find<SearchFoodSimilarMacroController>().posicaoAlimentoAnteriorTroca =
+                                    alimentos.key;
+                                Get.toNamed('search-food-similar-macro', arguments: {
+                                  'ref_id': widget.id,
+                                  'similarMacro': alimentos.value['macroPredominante'] ?? '',
+                                });
+                              },
                               child: Container(
                                 decoration: BoxDecoration(
                                   color: Colors.grey.shade200,
@@ -396,10 +564,14 @@ class _DietComponentWidgetState extends State<DietComponentWidget> {
                           children: [
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
-                              children: const [
+                              children: [
                                 Text(
-                                  'Valores totais:',
-                                  style: TextStyle(fontWeight: FontWeight.w800),
+                                  'Macronutrientes diários refeição:',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w800,
+                                    fontSize: 15,
+                                    color: Colors.grey.shade700,
+                                  ),
                                 ),
                               ],
                             ),
@@ -421,7 +593,7 @@ class _DietComponentWidgetState extends State<DietComponentWidget> {
                                       style: TextStyle(
                                         fontWeight: FontWeight.w700,
                                         color: Colors.grey.shade700,
-                                        fontSize: 17,
+                                        fontSize: 16,
                                       ),
                                     ),
                                   ],
@@ -441,7 +613,7 @@ class _DietComponentWidgetState extends State<DietComponentWidget> {
                                       style: TextStyle(
                                         fontWeight: FontWeight.w700,
                                         color: Colors.grey.shade700,
-                                        fontSize: 17,
+                                        fontSize: 16,
                                       ),
                                     ),
                                   ],
@@ -461,7 +633,7 @@ class _DietComponentWidgetState extends State<DietComponentWidget> {
                                       style: TextStyle(
                                         fontWeight: FontWeight.w700,
                                         color: Colors.grey.shade700,
-                                        fontSize: 17,
+                                        fontSize: 16,
                                       ),
                                     ),
                                   ],
@@ -481,10 +653,42 @@ class _DietComponentWidgetState extends State<DietComponentWidget> {
                                       style: TextStyle(
                                         fontWeight: FontWeight.w700,
                                         color: Colors.grey.shade700,
-                                        fontSize: 17,
+                                        fontSize: 16,
                                       ),
                                     ),
                                   ],
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10, bottom: 10),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.grey.shade700,
+                          width: 1,
+                        ),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Preço diário refeição: ${widget.controller.formatador.format(precoTotal)}',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w800,
+                                    fontSize: 15,
+                                    color: Colors.grey.shade700,
+                                  ),
                                 ),
                               ],
                             ),

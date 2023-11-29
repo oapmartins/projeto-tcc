@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:projeto_tcc/pages/home/diet/diet_controller.dart';
 import 'package:projeto_tcc/pages/home/search_food/search_food_controller.dart';
+import 'package:projeto_tcc/pages/home/search_food_similar_macro/search_food_similar_macro_controller.dart';
 import 'package:projeto_tcc/pages/register/register_controller.dart';
 import 'package:projeto_tcc/services/auth_service.dart';
 import 'package:projeto_tcc/services/diet_service.dart';
@@ -21,4 +22,5 @@ Future<void> initServices() async {
   Get.put(DietController());
   Get.put(RegisterController());
   Get.put(SearchFoodController());
+  Get.put(SearchFoodSimilarMacroController());
 }
