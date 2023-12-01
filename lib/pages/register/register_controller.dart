@@ -24,7 +24,7 @@ class RegisterController extends GetxController {
           'name': name.text,
           'email': email.text,
         }).then((value) {
-          Get.offAndToNamed('/allergy');
+          Get.offAndToNamed('/home');
           SnackbarsWidget().successSnackbar(
             title: 'Sucesso!',
             text: 'O usuário foi registrado com sucesso!',

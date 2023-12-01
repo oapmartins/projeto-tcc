@@ -5,6 +5,7 @@ import 'package:projeto_tcc/pages/home/diet/diet_controller.dart';
 import 'package:projeto_tcc/pages/home/diet/diet_page.dart';
 import 'package:projeto_tcc/pages/home/history/history_page.dart';
 import 'package:projeto_tcc/pages/home/profile/profile_page.dart';
+import 'package:projeto_tcc/pages/home/search_food/search_food_controller.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -16,6 +17,9 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
   @override
   void initState() {
+    if (!Get.isRegistered<SearchFoodController>()) {
+      Get.put(SearchFoodController());
+    }
     Get.find<DietController>().getUserDiet(id: FirebaseAuth.instance.currentUser?.uid ?? '');
     super.initState();
   }

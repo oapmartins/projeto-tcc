@@ -112,7 +112,7 @@ class _AddFoodPageState extends State<AddFoodPage> {
                         controller: controller.qtdePorcaoController,
                         keyboardType: TextInputType.number,
                         inputFormatters: [
-                          LengthLimitingTextInputFormatter(2),
+                          LengthLimitingTextInputFormatter(3),
                         ],
                         maxLengthEnforcement: MaxLengthEnforcement.none,
                         onChanged: (value) {

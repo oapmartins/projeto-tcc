@@ -228,38 +228,38 @@ class _DietPageState extends State<DietPage> {
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 10, bottom: 10),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: Colors.grey.shade700,
-                                width: 1,
-                              ),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        'Preço diário dieta: ${controller.formatador.format(controller.precoTotalDieta)}',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.w800,
-                                          fontSize: 16,
-                                          color: Colors.grey.shade700,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
+                        // Padding(
+                        //   padding: const EdgeInsets.only(top: 10, bottom: 10),
+                        //   child: Container(
+                        //     decoration: BoxDecoration(
+                        //       border: Border.all(
+                        //         color: Colors.grey.shade700,
+                        //         width: 1,
+                        //       ),
+                        //       borderRadius: BorderRadius.circular(10),
+                        //     ),
+                        //     child: Padding(
+                        //       padding: const EdgeInsets.all(8.0),
+                        //       child: Column(
+                        //         children: [
+                        //           Row(
+                        //             mainAxisAlignment: MainAxisAlignment.center,
+                        //             children: [
+                        //               Text(
+                        //                 'Preço diário dieta: ${controller.formatador.format(controller.precoTotalDieta)}',
+                        //                 style: TextStyle(
+                        //                   fontWeight: FontWeight.w800,
+                        //                   fontSize: 16,
+                        //                   color: Colors.grey.shade700,
+                        //                 ),
+                        //               ),
+                        //             ],
+                        //           ),
+                        //         ],
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
                       ],
                     );
                   }
@@ -507,7 +507,8 @@ class _DietComponentWidgetState extends State<DietComponentWidget> {
                             Expanded(
                               child: Column(
                                 children: [
-                                  Text('${alimentos.value['medidas']['valor energético (kcal)']} Kcal'),
+                                  Text(
+                                      '${alimentos.value['medidas']['valor energético (kcal)'].toStringAsFixed(2)} Kcal'),
                                 ],
                               ),
                             ),
