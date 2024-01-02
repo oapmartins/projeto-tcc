@@ -1,0 +1,26 @@
+Contexto - João
+Motivação - João
+
+Objetivos gerais - Octávio
+Objetivos especificos - Octávio
+
+Dieta e seus componentes - João
+Classificação de alimentos e produtos - João
+
+Arquitetura do sitema - Octávio
+Tecnologias e ferramentas - Octávio
+Trabalhos relacionados - Octávio
+
+Metodologia - João
+Arquitetura - João
+Diagrama de classes - João
+
+Requisitos funcionais - Octávio
+Requisitos não funcionais - Octávio
+
+Diagrama de casos de uso - João
+Fonte de dados - João
+
+Telas do app - Octávio
+Cronograma - Octávio
+Referencias - Octávio

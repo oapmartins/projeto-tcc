@@ -1,0 +1,21 @@
+Objetivo geral:
+O objetivo geral do trabalho, é desenvolver uma aplicação pra faciltiar a vida de pessoas que estão fazendo dieta. E dar a ela mais controle sobre possíveis alterações com base nas preferencias que ela definir.
+
+Objetivos específicos
+- O usuário poder informar a dieta e os horários de cada alimentação
+- Criação das trocas de alimementos, respeitando os macronutrientes
+- Fazer um sistema de cálculo de preço
+- Implementação do algoritmo de sugestão de refeições
+- Interface intuitiva para o usuário
+
+Arquitetura MVC
+- Visão: interface do usuário
+- Modelo: acesso e manipulação dos dados
+- Controlador: intermediar a conexão do modelo e visão.
+
+Requisitos funcionais
+- Esses são os principais requisitos que o sistema precisa atender
+- Classificadas por prioridade
+
+Requisitos não funcionais
+- Esses são os principais requisitos relacionados ao uso da aplicação em termos: 
